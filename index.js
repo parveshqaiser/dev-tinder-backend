@@ -5,6 +5,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const profileRoutes = require("./src/routes/profileRoutes");
 const requestRoutes = require("./src/routes/requestRoutes");
 const userHomeRoutes = require("./src/routes/userRoutes");
+const messageRoutes = require("./src/routes/messageRoutes");
 
 const parser = require("cookie-parser");
 const path = require("path");
@@ -25,6 +26,7 @@ app.use("/",authRoutes);
 app.use("/",profileRoutes);
 app.use("/",requestRoutes);
 app.use("/",userHomeRoutes);
+app.use("/", messageRoutes);
 
 // app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

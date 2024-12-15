@@ -74,7 +74,7 @@ router.post("/login", async(req,res)=>{
             return;
         } else{
             res.cookie("token",token);
-            res.status(201).json({message:"Login Success", success: true , token});
+            res.status(201).json({message:"Hey "+ userData.fullName + ", Login Success", success: true , token});
         }
 
     } catch (error) {

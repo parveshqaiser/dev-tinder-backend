@@ -6,8 +6,6 @@ const userAuthentication = async (req,res, next)=>{
 
     try {
         let getCookie = req.cookies?.token;
-
-        console.log("getCookie **", getCookie)
         if(!getCookie)
         {
             res.status(401).json({message: "Unauthorized user"});
