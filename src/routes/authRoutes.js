@@ -95,8 +95,46 @@ router.post("/logout", (req,res)=>{
     }
 });
 
-router.post("/forgot/password",async(req,res)=>{
+router.post("/check/email",async(req,res)=>{
 
+    try {
+        let {email} = req.body;
+
+        let isEmailExist = await UserDetails.findOne({email});
+        
+        if(!isEmailExist)
+        {
+            return res.status(404).json({message : "Invalid Email", success : false})
+        }
+
+        res.status(200).json({message : "email valid ", success : true});
+    } catch (error) {
+        console.log("err in forgetting pass ", error)
+    }
 });
+
+router.post("/forgot/password", async(req, res)=>{
+
+    try {
+        let {confirmPassword, newPassword, email} = req.body;
+
+        if(!newPassword || (newPassword && newPassword.trim()== ""))
+        {
+            return res.status(400).json({message : "Password Required", success : false})
+        }
+
+        let user = await UserDetails.findOne({email});
+
+        let hashPassword = await bcrypt.hash(newPassword,10);
+
+        user.password = hashPassword;
+        await user.save();
+
+        return res.status(200).json({message : "Password Changed", success : true})
+
+    } catch (error) {
+        res.status(400).send("error " + error.message);
+    }
+})
 
 module.exports = router;
