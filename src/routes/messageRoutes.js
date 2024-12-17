@@ -54,7 +54,6 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
     }
 });
 
-
 // get all conversation between two users
 
 router.get("/get/messages/:id", userAuthentication, async(req, res)=>{
@@ -76,7 +75,8 @@ router.get("/get/messages/:id", userAuthentication, async(req, res)=>{
     }
 
 
-})
+});
+
 
 
 module.exports = router;

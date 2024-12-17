@@ -95,6 +95,7 @@ router.post("/logout", (req,res)=>{
     }
 });
 
+//  forgetting password , validate mail
 router.post("/check/email",async(req,res)=>{
 
     try {
