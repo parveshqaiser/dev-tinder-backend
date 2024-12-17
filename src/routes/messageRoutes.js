@@ -33,19 +33,19 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
             getConversation =  await conversationDetails.create({partners : [fromUserId , toUserId]})
         }
 
-        let addMessage = await messageDetails.create({
+        let addNewMessage = await messageDetails.create({
             fromUserId,
             toUserId,
             message
         });
 
-        if(addMessage && getConversation){
-            getConversation.messages.push(addMessage?._id);
+        if(addNewMessage && getConversation){
+            getConversation.messages.push(addNewMessage?._id);
         }
 
         await getConversation.save();
 
-        res.status(200).json({message : "Message Sent", success : true})
+        res.status(200).json({addNewMessage, success : true})
 
         // use of socket io
 
@@ -65,18 +65,14 @@ router.get("/get/messages/:id", userAuthentication, async(req, res)=>{
         let getAllMessages = await conversationDetails.findOne({partners : {$all : [fromUserId ,toUserId]}}).populate("messages");
 
         if(getAllMessages == null){
-            return res.status(200).json({message : "No Conversation", getAllMessages : []})
+            return res.status(200).json({message : "No Conversation", getAllMessages : [] , success:true})
         }
 
-        res.status(200).json({getAllMessages})
+        res.status(200).json({getAllMessages, success: true})
         
     } catch (error) {
         console.log("err in receiving msg ", error);
     }
-
-
 });
-
-
 
 module.exports = router;
