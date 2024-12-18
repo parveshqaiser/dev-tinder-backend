@@ -5,6 +5,7 @@ const { userAuthentication} = require("../middleware/authentication");
 const { UserDetails } = require("../model/user");
 const {conversationDetails } = require("../model/conversation");
 const { messageDetails } = require("../model/message");
+const {io, getReceiverSocketId} = require("../socket/socket");
 
 router.post("/send/message/:id", userAuthentication, async(req, res)=>{
 
@@ -43,11 +44,16 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
             getConversation.messages.push(addNewMessage?._id);
         }
 
-        await getConversation.save();
-
-        res.status(200).json({addNewMessage, success : true})
+        // await getConversation.save();
+        await Promise.all([getConversation.save(), addNewMessage.save()])
 
         // use of socket io
+        let receiverId = getReceiverSocketId(toUserId);
+
+        if(receiverId){
+            io.to(receiverId).emit("newMessage", addNewMessage)
+        }
+        res.status(200).json({addNewMessage, success : true})
 
     } catch (error) {
         console.log("error in sending msg ", error)
