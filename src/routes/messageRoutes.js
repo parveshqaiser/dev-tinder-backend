@@ -45,13 +45,19 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
         }
 
         // await getConversation.save();
-        await Promise.all([getConversation.save(), addNewMessage.save()])
+        await Promise.all([getConversation.save(), addNewMessage.save()]).catch((err)=>{
+            console.error("Error saving conversation or message:", err);
+        })
 
         // use of socket io
         let receiverId = getReceiverSocketId(toUserId);
 
+        console.log("receiverId ", receiverId);
+
         if(receiverId){
-            io.to(receiverId).emit("newMessage", addNewMessage)
+            io.to(receiverId).emit("addNewMessage", addNewMessage)
+        }else {
+            console.log("Receiver is not online or socket ID not found.");
         }
         res.status(200).json({addNewMessage, success : true})
 

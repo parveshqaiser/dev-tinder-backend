@@ -9,7 +9,7 @@ const socketServer = http.createServer(app);
 const io = new Server(socketServer, { 
     cors: {
         origin: "http://localhost:5173",
-        methods: ["GET", "POST"]
+        methods: ["GET", "POST"],
     },
     transports: ["polling", "websocket"]
 });
@@ -22,7 +22,7 @@ const getReceiverSocketId = (id)=>{
 }
 
 io.on("connection", (socket) => {
-    console.log("User logged in:", socket.id);
+    console.log("User connected with socket id :", socket.id);
 
     let userId = socket.handshake.query.userId;
 
