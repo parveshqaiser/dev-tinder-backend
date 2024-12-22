@@ -6,7 +6,7 @@ const profileRoutes = require("./src/routes/profileRoutes");
 const requestRoutes = require("./src/routes/requestRoutes");
 const userRoutes = require("./src/routes/userRoutes");
 const messageRoutes = require("./src/routes/messageRoutes");
-const {socketServer, app} = require("./src/socket/socket")
+const {socketServer,io,app} = require("./src/socket/socket");
 
 const parser = require("cookie-parser");
 const path = require("path");

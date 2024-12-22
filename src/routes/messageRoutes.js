@@ -5,7 +5,7 @@ const { userAuthentication} = require("../middleware/authentication");
 const { UserDetails } = require("../model/user");
 const {conversationDetails } = require("../model/conversation");
 const { messageDetails } = require("../model/message");
-const {io, getReceiverSocketId} = require("../socket/socket");
+const {io, getReceiverSocketId}  = require("../socket/socket")
 
 router.post("/send/message/:id", userAuthentication, async(req, res)=>{
 
@@ -52,13 +52,13 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
         // use of socket io
         let receiverId = getReceiverSocketId(toUserId);
 
-        console.log("receiverId ", receiverId);
-
+      
         if(receiverId){
             io.to(receiverId).emit("addNewMessage", addNewMessage)
         }else {
             console.log("Receiver is not online or socket ID not found.");
         }
+
         res.status(200).json({addNewMessage, success : true})
 
     } catch (error) {

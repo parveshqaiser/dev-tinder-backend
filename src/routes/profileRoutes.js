@@ -32,6 +32,10 @@ router.patch("/profile/edit",userAuthentication, uploadFile.single("file"), asyn
         let file = req.file;
         let cloudUrl;
 
+        if(!age || (age && age <=17)){
+            return res.status(400).json({message : "Age Should be above 18", success: false})
+        }
+
         // if(!skills){
         //     return res.status(400).json({message: "Please Select Your Interest", success: false})
         // }
