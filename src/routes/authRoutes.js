@@ -99,9 +99,9 @@ router.post("/logout", (req,res)=>{
 router.post("/check/email",async(req,res)=>{
 
     try {
-        let {email} = req.body;
+        let {emailData} = req.body;
 
-        let isEmailExist = await UserDetails.findOne({email});
+        let isEmailExist = await UserDetails.findOne({email : emailData});
         
         if(!isEmailExist)
         {
