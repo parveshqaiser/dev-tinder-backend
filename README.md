@@ -8,5 +8,6 @@ Node js <br>
 Express <br>
 Mongo Atlas <br>
 Json Web Token  <br>
+Socket IO <br>
 
 
