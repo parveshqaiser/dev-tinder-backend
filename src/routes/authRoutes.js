@@ -67,14 +67,16 @@ router.post("/login", async(req,res)=>{
         }
 
         let matchPassword = await bcrypt.compare(password,userData.password);
-        let token = jwt.sign({id : userData._id },"secret-key",{expiresIn :"1d"});
+        let token = jwt.sign({id : userData._id },"secret-key",{expiresIn :"1h"});
+        let refreshToken = jwt.sign({id : userData._id },"secret-key",{expiresIn :"2h"})
 
         if(!matchPassword){
             res.status(400).json({message: "Invalid Credentials"});
             return;
         } else{
             res.cookie("token",token);
-            res.status(201).json({message:"Hey "+ userData.fullName + ", Login Success", success: true , token});
+            res.cookie("refreshToken", refreshToken);
+            res.status(201).json({message:"Hey "+ userData.fullName + ", Login Success", success: true , token ,refreshToken});
         }
 
     } catch (error) {
@@ -86,6 +88,7 @@ router.post("/login", async(req,res)=>{
 router.post("/logout", (req,res)=>{
 
     try {
+        // res.clearCookie("key")
         res.cookie("token", "", {expires: new Date(Date.now())}).json({message :"Logout Success", success : true})
 
         // return res.status(200).cookie("token", "", {maxAge:0}).json({message :"Logout Success", success : true})

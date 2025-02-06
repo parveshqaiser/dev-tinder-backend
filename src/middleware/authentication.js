@@ -5,7 +5,7 @@ let jwt = require("jsonwebtoken");
 const userAuthentication = async (req,res, next)=>{
 
     try {
-        let getCookie = req.cookies?.token;
+        let getCookie = req.cookies?.token; // .token here is the key
         if(!getCookie)
         {
             res.status(401).json({message: "Unauthorized user"});
