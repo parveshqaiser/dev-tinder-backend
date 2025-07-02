@@ -1,7 +1,7 @@
 
+const http = require("http");
 const { Server } = require("socket.io");
 const express = require("express");
-const http = require("http");
 const app = express();
 const socketServer = http.createServer(app);
 
@@ -21,7 +21,6 @@ const getReceiverSocketId = (id)=>{
 io.on("connection",(socket)=>{
 
     console.log("user connected on Socket ID :", socket.id);
-    console.log(socket.id);
 
     let userId = socket.handshake.query.userId;
 
