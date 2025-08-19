@@ -16,9 +16,12 @@ dotenv.config();
 
 app.use(parser());
 app.use(cors({
-    origin : "http://localhost:5173",
+    // origin : "http://localhost:5173",
+    origin : "https://devt-tinder.netlify.app/",
     credentials : true
 }));
+
+// app.use(cors());
 
 // it will work for all request
 app.use(express.json()); // app.use(express.urlencoded({extended:true}));
