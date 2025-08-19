@@ -17,7 +17,7 @@ dotenv.config();
 app.use(parser());
 app.use(cors({
     // origin : "http://localhost:5173",
-    origin : "https://devt-tinder.netlify.app/",
+    origin : "https://devt-tinder.netlify.app",
     credentials : true
 }));
 
