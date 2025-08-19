@@ -11,6 +11,8 @@ const {socketServer,io,app} = require("./src/socket/socket");
 const parser = require("cookie-parser");
 const path = require("path");
 const cors = require("cors")
+const dotenv = require("dotenv");
+dotenv.config();
 
 app.use(parser());
 app.use(cors({

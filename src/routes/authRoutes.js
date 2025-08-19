@@ -67,8 +67,8 @@ router.post("/login", async(req,res)=>{
         }
 
         let matchPassword = await bcrypt.compare(password,userData.password);
-        let token = jwt.sign({id : userData._id },"secret-key",{expiresIn :"1h"});
-        let refreshToken = jwt.sign({id : userData._id },"secret-key",{expiresIn :"2h"})
+        let token = jwt.sign({id : userData._id },process.env.JWT_SECRET_KEY,{expiresIn :"1h"});
+        let refreshToken = jwt.sign({id : userData._id },process.env.JWT_SECRET_KEY,{expiresIn :"2h"})
 
         if(!matchPassword){
             res.status(400).json({message: "Invalid Credentials"});
