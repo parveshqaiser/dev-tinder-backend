@@ -3,5 +3,6 @@
 /notes.txt
 /notes2.txt
 /socketTest.js
+/eventLoop.js
 /.gitignore
 /.env
