@@ -15,13 +15,24 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 app.use(parser());
-app.use(cors({
-    // origin : "http://localhost:5173",
-    origin : "https://devt-tinder.netlify.app",
-    credentials : true
-}));
+const allowedOrigins = [
+    "http://localhost:5173",             
+    "https://devt-tinder.netlify.app"
+];
 
-// app.use(cors());
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } 
+        else {
+            return callback(new Error("CORS not allowed for this origin"), false);
+        }
+    },
+    credentials: true
+}));
 
 // it will work for all request
 app.use(express.json()); // app.use(express.urlencoded({extended:true}));
