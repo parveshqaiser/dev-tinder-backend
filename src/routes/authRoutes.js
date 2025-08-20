@@ -74,7 +74,7 @@ router.post("/login", async(req,res)=>{
             res.status(400).json({message: "Invalid Credentials"});
             return;
         } else{
-            res.cookie("token",token);
+            res.cookie("token",token, {sameSite:"none" , httpOnly:true , maxAge: 7 * 24 * 60 * 60 * 1000});
             res.cookie("refreshToken", refreshToken);
             res.status(201).json({message:"Hey "+ userData.fullName + ", Login Success", success: true , token ,refreshToken});
         }
