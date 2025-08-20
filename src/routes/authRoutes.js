@@ -51,18 +51,18 @@ router.post("/login", async(req,res)=>{
 
     try {
         if(!validator.isEmail(email)){
-            res.status(400).json({message: "Email Required"});
+            res.status(400).json({message: "Email Required", success:false});
             return;
         }
 
         if(!password || (password && password.trim()== "")){
-            res.status(400).json({message: "Password Required"});
+            res.status(400).json({message: "Password Required", success:false});
             return;
         }
         let userData = await UserDetails.findOne({email});
 
         if(!userData){
-            res.status(400).json({message: "Invalid Credentials"});
+            res.status(400).json({message: "Invalid Credentials", success:false});
             return;
         }
 
@@ -71,7 +71,7 @@ router.post("/login", async(req,res)=>{
         let refreshToken = jwt.sign({id : userData._id },process.env.JWT_SECRET_KEY,{expiresIn :"2h"})
 
         if(!matchPassword){
-            res.status(400).json({message: "Invalid Credentials"});
+            res.status(400).json({message: "Invalid Credentials", success:false});
             return;
         } else{
             res.cookie("token",token, {secure:true, sameSite:"none" , httpOnly:true , maxAge: 7 * 24 * 60 * 60 * 1000});
