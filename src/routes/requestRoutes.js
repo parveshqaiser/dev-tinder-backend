@@ -56,7 +56,11 @@ router.post("/request/:status/:id", userAuthentication, async(req,res)=>{
         
     } catch (error) {
         console.log("error sending request ", error);
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -90,7 +94,11 @@ router.post("/request/review/:status/:id",userAuthentication, async(req,res)=>{
 
     } catch (error) {
         console.log("error sending request ", error);
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
