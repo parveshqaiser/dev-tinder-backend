@@ -28,7 +28,11 @@ router.get("/users/request/pending", userAuthentication, async(req,res)=>{
         
     } catch (error) {
         console.log("error getting all request ", error);
-        res.status(500).json({ message: "Internal Server Error", success: false });
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -74,7 +78,11 @@ router.get("/users/connection/all", userAuthentication,async(req,res)=>{
 
     } catch (error) {
         console.log("error getting all request ", error);
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -125,8 +133,11 @@ router.get("/users/feed", userAuthentication, async(req,res)=>{
         res.status(200).json({data :allFeedUsers , success: true})
 
     } catch (error) {
-        console.log("error getting all feeds ", error);
-        res.status(400).send("error " + error.message);
+         res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 })
 
@@ -170,7 +181,11 @@ router.get("/test/users/feed",userAuthentication, async(req,res)=>{
         res.status(200).json({filter, message:"ALl Feeds"})
         
     } catch (error) {
-        console.log(" ************ error ", error);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 })
 
