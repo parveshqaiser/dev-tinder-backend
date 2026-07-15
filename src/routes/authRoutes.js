@@ -41,7 +41,11 @@ router.post("/signup", async(req,res)=>{
         res.status(201).json({message:"Account Created Successfully", success: true});
     } catch (error) {
         console.log("failed to create user", error);
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -81,7 +85,11 @@ router.post("/login", async(req,res)=>{
 
     } catch (error) {
         console.log("failed to login ", error);
-        res.status(400).send(error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -94,7 +102,11 @@ router.post("/logout", (req,res)=>{
         // return res.status(200).cookie("token", "", {maxAge:0}).json({message :"Logout Success", success : true})
     } catch (error) {
         console.log("error logging out ", error);
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -113,7 +125,11 @@ router.post("/check/email",async(req,res)=>{
 
         res.status(200).json({message : "email valid ", success : true});
     } catch (error) {
-        console.log("err in forgetting pass ", error)
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -137,7 +153,11 @@ router.post("/forgot/password", async(req, res)=>{
         return res.status(200).json({message : "Password Changed", success : true})
 
     } catch (error) {
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 })
 
