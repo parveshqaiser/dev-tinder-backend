@@ -55,7 +55,7 @@ router.post("/request/:status/:id", userAuthentication, async(req,res)=>{
         res.status(200).json({message: `Status ${connRequest.status}ed`, success: true});
         
     } catch (error) {
-        console.log("error sending request ", error);
+        // console.log("error sending request ", error);
         res.status(500).json({ 
             message: "Server Error", 
             error: error.message, 
@@ -93,7 +93,7 @@ router.post("/request/review/:status/:id",userAuthentication, async(req,res)=>{
        res.status(200).json({message: `Request ${updatedData.status}ed`, success: true});
 
     } catch (error) {
-        console.log("error sending request ", error);
+        // console.log("error sending request ", error);
         res.status(500).json({ 
             message: "Server Error", 
             error: error.message, 

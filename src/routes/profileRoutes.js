@@ -14,12 +14,21 @@ router.get("/profile/view",userAuthentication, async(req,res, next)=>{
     try {
         let loggedInUser = req.user;
 
-        let user = await UserDetails.findById(loggedInUser._id).select("fullName email age gender bio skills languages photoUrl");
+        let user = await UserDetails.findById(loggedInUser._id)
+        .select("fullName email age gender bio skills languages photoUrl");
 
-        res.status(200).json({message: "Data Fetched Successfully", success:true , user})
+        res.status(200).json({
+            message: "Data Fetched Successfully", 
+            success : true , 
+            user
+        });
     } catch (error) {
-        console.log("failed to send user", error);
-        res.status(400).send("error " + error.message);
+        
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -82,10 +91,18 @@ router.patch("/profile/edit",userAuthentication, uploadFile.single("file"), asyn
             photoUrl : updatedData.photoUrl
         }
    
-        res.status(201).json({message : "Profile Updated" , data, success: true});
+        res.status(201).json({
+            message : "Profile Updated", 
+            success: true,
+            data, 
+        });
 
     } catch (error) {
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -115,10 +132,17 @@ router.patch("/profile/change/password",userAuthentication, async(req,res)=>{
         user.password = hashPassword;
         await user.save();
 
-        res.status(200).json({message : "Password Updated", success: true});
+        res.status(200).json({
+            message : "Password Updated", 
+            success: true
+        });
 
     } catch (error) {
-        res.status(400).send("error " + error.message);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
