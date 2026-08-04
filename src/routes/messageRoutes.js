@@ -19,7 +19,10 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
         let isUserExist = await UserDetails.findById(toUserId);
 
         if(!isUserExist){
-            return res.status(404).json({message : "User Doesn't exist", success : false});
+            return res.status(404).json({
+                message : "User Doesn't exist", 
+                success : false
+            });
         }
 
         // here need to add validation that message can be sent only to friends & not all users
@@ -59,10 +62,14 @@ router.post("/send/message/:id", userAuthentication, async(req, res)=>{
             console.log("Receiver is not online or socket ID not found.");
         }
 
-        res.status(200).json({addNewMessage, success : true})
+        res.status(200).json({addNewMessage, success : true}); /// data key must be there
 
     } catch (error) {
-        console.log("error in sending msg ", error)
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
@@ -77,13 +84,25 @@ router.get("/get/messages/:id", userAuthentication, async(req, res)=>{
         let getAllMessages = await conversationDetails.findOne({partners : {$all : [fromUserId ,toUserId]}}).populate("messages");
 
         if(getAllMessages == null){
-            return res.status(200).json({message : "No Conversation", getAllMessages : [] , success:true})
+            return res.status(200).json({
+                message : "No Conversation", 
+                getAllMessages : [] , 
+                success : true
+            });
         }
 
-        res.status(200).json({getAllMessages, success: true})
+        // data key missing
+        res.status(200).json({
+            getAllMessages, 
+            success: true
+        });
         
     } catch (error) {
-        console.log("err in receiving msg ", error);
+        res.status(500).json({ 
+            message: "Server Error", 
+            error: error.message, 
+            success: false 
+        });
     }
 });
 
