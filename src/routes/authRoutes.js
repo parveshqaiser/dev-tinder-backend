@@ -40,7 +40,7 @@ router.post("/signup", async(req,res)=>{
         await user.save();
         res.status(201).json({message:"Account Created Successfully", success: true});
     } catch (error) {
-        console.log("failed to create user", error);
+        
         res.status(500).json({ 
             message: "Server Error", 
             error: error.message, 
@@ -84,7 +84,6 @@ router.post("/login", async(req,res)=>{
         }
 
     } catch (error) {
-        console.log("failed to login ", error);
         res.status(500).json({ 
             message: "Server Error", 
             error: error.message, 
@@ -97,7 +96,11 @@ router.post("/logout", (req,res)=>{
 
     try {
         // res.clearCookie("key")
-        res.cookie("token", "", {expires: new Date(Date.now())}).json({message :"Logout Success", success : true})
+        res.cookie("token", "", {expires: new Date(Date.now())})
+            .json({
+                message :"Logout Success", 
+                success : true
+            });
 
         // return res.status(200).cookie("token", "", {maxAge:0}).json({message :"Logout Success", success : true})
     } catch (error) {
@@ -118,8 +121,7 @@ router.post("/check/email",async(req,res)=>{
 
         let isEmailExist = await UserDetails.findOne({email : emailData});
         
-        if(!isEmailExist)
-        {
+        if(!isEmailExist){
             return res.status(404).json({message : "Invalid Email", success : false})
         }
 
