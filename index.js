@@ -16,7 +16,8 @@ dotenv.config();
 
 app.use(parser());
 const allowedOrigins = [
-    "http://localhost:5173",             
+    "http://localhost:5173",
+    "http://localhost:5174",                
     "https://react-dev-tinder.netlify.app"
 ];
 
